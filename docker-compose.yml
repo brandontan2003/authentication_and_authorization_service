@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  auth-service:
+    init: true
+    build:
+      dockerfile: ./Dockerfile
+    image: auth-service:latest
+    env_file:
+      - ./env/docker.env
+    working_dir: /app
+    container_name: auth-service
+    depends_on:
+      - auth-service-flyway
+    ports:
+      - '8080:8080'
+    restart: on-failure
+
+  auth-service-mysql:
+    init: true
+    image: mysql:8.0.26
+    container_name: auth-service-mysql
+    env_file:
+      - ./env/docker.env
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  auth-service-flyway:
+    init: true
+    image: flyway/flyway
+    container_name: auth-service-flyway
+    command: -url='jdbc:mysql://auth-service-mysql/auth_service_db?allowPublicKeyRetrieval=true&useSSL=false' -schemas=auth_service_db  -user=admin -password=admin -connectRetries=60 repair migrate
+    volumes:
+      - ./src/main/resources/db-migration:/flyway/sql
+    depends_on:
+      - auth-service-mysql
+    restart: on-failure
+
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  default:
+    name: auth-service

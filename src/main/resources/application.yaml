@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: authentication_and_authorization_service
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    jpa:
+      hibernate:
+        ddl-auto: update
+    hikari:
+      connection-timeout: 30000
+
+server:
+  port: ${SERVER_PORT}
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    expiration-time: 60000
+
+logging:
+  level:
+    root: INFO

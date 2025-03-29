@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: authentication_and_authorization_service
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL}
+    username: ${MYSQL_USER:sa}
+    password: ${MYSQL_PASSWORD:}
+    jpa:
+      hibernate:
+        ddl-auto: update
+    hikari:
+      connection-timeout: 30000
+
+server:
+  port: ${SERVER_PORT:1090}
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY:sk}
+    expiration-time: 3600000

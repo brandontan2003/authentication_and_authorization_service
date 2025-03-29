@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS user_table (
+    user_id VARCHAR(36) PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password LONGTEXT NOT NULL
+);
