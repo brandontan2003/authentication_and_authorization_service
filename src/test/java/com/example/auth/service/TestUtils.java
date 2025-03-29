@@ -12,4 +12,11 @@ public class TestUtils {
     public static <T> String writeValueAsString(T value) throws JsonProcessingException {
         return new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(value);
     }
+
+    public static class TestUser {
+        public static final String USERNAME = "username";
+        public static final String EMAIL = "email@test.com";
+        public static final String PASSWORD = "1234";
+    }
+
 }
