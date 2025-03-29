@@ -27,8 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.example.auth.service.common.constant.ApiConstant.*;
-import static com.example.auth.service.common.exception.CommonErrorMessage.FORBIDDEN_ERROR;
-import static com.example.auth.service.common.exception.CommonErrorMessage.UNAUTHORIZED_ERROR;
+import static com.example.auth.service.common.exception.CommonErrorMessage.*;
 import static com.example.auth.service.constant.UriConstant.API_AUTHENTICATION;
 import static com.example.auth.service.constant.UriConstant.OPEN;
 
@@ -87,7 +86,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (JwtException ex) {
             sendErrorResponse(response, UNAUTHORIZED_ERROR);
         } catch (Exception ex) {
-            handlerExceptionResolver.resolveException(request, response, null, ex);
+            sendErrorResponse(response, INVALID_TOKEN_ERROR);
         }
     }
 
