@@ -27,7 +27,7 @@ repositories {
 
 ext {
     LOMBOK_VERSION = '1.18.22'
-    JWT_VERSION = '0.11.5'
+    JWT_VERSION = '0.12.6'
 }
 
 dependencies {
