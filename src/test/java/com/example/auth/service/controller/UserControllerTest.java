@@ -36,7 +36,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void retrieveEducations_ReturnEducations_Success() {
+    void retrieveUserProfile_Success() {
         when(userService.retrieveUserProfile()).thenReturn(buildRetrieveUserProfileResponse());
 
         ResponsePayload<RetrieveUserProfileResponse> actualResponse = userController.retrieveProfile();
