@@ -60,7 +60,7 @@ public class AuthenticationService {
         return userRepository.save(user);
     }
 
-    public void validateSignUpRequest(CreateUserRequest createUserRequest) {
+    private void validateSignUpRequest(CreateUserRequest createUserRequest) {
         Optional<User> username = userRepository.findByUsername(createUserRequest.getUsername());
         if (username.isPresent()) {
             throw new AuthException(USERNAME_ALREADY_EXISTS);
