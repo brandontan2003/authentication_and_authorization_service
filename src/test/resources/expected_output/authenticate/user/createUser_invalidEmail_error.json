@@ -1,0 +1,11 @@
+{
+  "status": "ERROR",
+  "result": {
+    "errors": [
+      {
+        "errorCode": "FIELD_VALIDATION_ERROR",
+        "errorMessage": "Invalid email format."
+      }
+    ]
+  }
+}
