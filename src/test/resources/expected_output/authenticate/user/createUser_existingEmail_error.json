@@ -1,0 +1,11 @@
+{
+  "status": "ERROR",
+  "result": {
+    "errors": [
+      {
+        "errorCode": "EMAIL_ALREADY_EXISTS",
+        "errorMessage": "An account with this email already exists. Please log in or use the 'Forgot Password' option."
+      }
+    ]
+  }
+}

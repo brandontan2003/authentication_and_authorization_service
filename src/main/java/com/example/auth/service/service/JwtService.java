@@ -2,13 +2,13 @@ package com.example.auth.service.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
@@ -34,11 +34,11 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignInKey())
+        return Jwts.parser()
+                .verifyWith((SecretKey) getSignInKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private Key getSignInKey() {
@@ -56,11 +56,11 @@ public class JwtService {
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, Long jwtExpiration) {
         Instant currentDateTime = Instant.now();
         return Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setExpiration(Date.from(currentDateTime))
-                .setExpiration(Date.from(currentDateTime.plusMillis(jwtExpiration)))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .claims(extraClaims)
+                .subject(userDetails.getUsername())
+                .issuedAt(Date.from(currentDateTime))
+                .expiration(Date.from(currentDateTime.plusMillis(jwtExpiration)))
+                .signWith(getSignInKey())
                 .compact();
     }
 

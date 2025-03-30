@@ -1,0 +1,7 @@
+{
+  "status": "SUCCESS",
+  "result": {
+    "token": "#token#",
+    "expiresIn": 3600000
+  }
+}

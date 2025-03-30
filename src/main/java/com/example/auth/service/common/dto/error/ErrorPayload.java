@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ErrorPayload {
 
-    private Error error;
+    private String errorCode;
+    private String errorMessage;
 
 }

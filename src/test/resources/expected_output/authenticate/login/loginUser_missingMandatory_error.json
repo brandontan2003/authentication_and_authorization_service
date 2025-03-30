@@ -1,0 +1,15 @@
+{
+  "status": "ERROR",
+  "result": {
+    "errors": [
+      {
+        "errorCode": "FIELD_VALIDATION_ERROR",
+        "errorMessage": "Username cannot be blank."
+      },
+      {
+        "errorCode": "FIELD_VALIDATION_ERROR",
+        "errorMessage": "Password cannot be blank."
+      }
+    ]
+  }
+}

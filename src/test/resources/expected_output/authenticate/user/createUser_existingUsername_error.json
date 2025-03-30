@@ -1,0 +1,11 @@
+{
+  "status": "ERROR",
+  "result": {
+    "errors": [
+      {
+        "errorCode": "USERNAME_ALREADY_EXISTS",
+        "errorMessage": "This username is already in use. Please choose another one."
+      }
+    ]
+  }
+}

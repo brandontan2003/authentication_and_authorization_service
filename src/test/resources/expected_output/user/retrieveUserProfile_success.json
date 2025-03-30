@@ -1,0 +1,11 @@
+{
+  "status": "SUCCESS",
+  "result": {
+    "username": "username",
+    "email": "email@test.com",
+    "enabled": true,
+    "accountNonExpired": true,
+    "credentialsNonExpired": true,
+    "accountNonLocked": true
+  }
+}

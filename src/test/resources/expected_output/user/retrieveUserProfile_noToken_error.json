@@ -1,0 +1,11 @@
+{
+  "status": "ERROR",
+  "result": {
+    "errors": [
+      {
+        "errorCode": "INVALID_TOKEN_ERROR",
+        "errorMessage": "Token is invalid."
+      }
+    ]
+  }
+}

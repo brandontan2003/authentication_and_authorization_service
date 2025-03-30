@@ -1,0 +1,11 @@
+{
+  "status": "ERROR",
+  "result": {
+    "errors": [
+      {
+        "errorCode": "USER_NOT_FOUND",
+        "errorMessage": "User not found."
+      }
+    ]
+  }
+}

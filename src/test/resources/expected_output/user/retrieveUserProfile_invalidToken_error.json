@@ -1,0 +1,11 @@
+{
+  "status": "ERROR",
+  "result": {
+    "errors": [
+      {
+        "errorCode": "UNAUTHORIZED_ERROR",
+        "errorMessage": "Token has expired or is invalid."
+      }
+    ]
+  }
+}
