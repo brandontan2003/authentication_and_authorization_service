@@ -1,7 +1,6 @@
 package com.example.auth.service.common.exception;
 
 import com.example.auth.service.common.dto.ResponsePayload;
-import com.example.auth.service.common.dto.error.Error;
 import com.example.auth.service.common.dto.error.ErrorPayload;
 import com.example.auth.service.common.dto.error.ErrorsPayload;
 import org.springframework.http.HttpStatus;
@@ -25,8 +24,8 @@ import static com.example.auth.service.common.exception.CommonErrorMessage.*;
 @ControllerAdvice
 public class CommonExceptionHandler {
 
-    private static Error getError(CommonErrorMessage err) {
-        return Error.builder().errorCode(err.getErrorCode()).errorMessage(err.getErrorMessage()).build();
+    public static ErrorPayload getError(CommonErrorMessage err) {
+        return ErrorPayload.builder().errorCode(err.getErrorCode()).errorMessage(err.getErrorMessage()).build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -38,38 +37,38 @@ public class CommonExceptionHandler {
                 .map(FieldError::getDefaultMessage)
                 .toList();
 
-        List<Error> errorList = new ArrayList<>();
+        List<ErrorPayload> errorPayloadList = new ArrayList<>();
         errorDescriptions.forEach(errorDescription -> {
-            Error err = getError(FIELD_VALIDATION_ERROR);
+            ErrorPayload err = getError(FIELD_VALIDATION_ERROR);
             err.setErrorMessage(errorDescription);
-            errorList.add(err);
+            errorPayloadList.add(err);
         });
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponsePayload.<ErrorsPayload>builder()
-                .status(STATUS_ERROR).result(ErrorsPayload.builder().errors(errorList).build()).build());
+                .status(STATUS_ERROR).result(ErrorsPayload.builder().errors(errorPayloadList).build()).build());
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<ResponsePayload<ErrorPayload>> handleRequestParametersValidation(
+    public ResponseEntity<ResponsePayload<ErrorsPayload>> handleRequestParametersValidation(
             MissingServletRequestParameterException ex) {
-        Error err = getError(FIELD_VALIDATION_ERROR);
+        ErrorPayload err = getError(FIELD_VALIDATION_ERROR);
         err.setErrorMessage(ex.getParameterName() + " is required.");
 
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponsePayload.<ErrorPayload>builder()
-                .status(STATUS_ERROR).result(ErrorPayload.builder().error(err).build()).build());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponsePayload.<ErrorsPayload>builder()
+                .status(STATUS_ERROR).result(ErrorsPayload.builder().errors(List.of(err)).build()).build());
     }
 
     @ExceptionHandler({AccessDeniedException.class, AuthenticationException.class})
-    public ResponseEntity<ResponsePayload<ErrorPayload>> handleAccessDenied(AccessDeniedException ex) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponsePayload.<ErrorPayload>builder()
-                .status(STATUS_ERROR).result(ErrorPayload.builder().error(getError(FORBIDDEN_ERROR)).build()).build());
+    public ResponseEntity<ResponsePayload<ErrorsPayload>> handleAccessDenied(Exception ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponsePayload.<ErrorsPayload>builder()
+                .status(STATUS_ERROR).result(ErrorsPayload.builder().errors(List.of(getError(FORBIDDEN_ERROR))).build()).build());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ResponsePayload<ErrorPayload>> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(ResponsePayload.<ErrorPayload>builder()
-                .status(STATUS_ERROR).result(ErrorPayload.builder().error(getError(METHOD_NOT_ALLOWED_ERROR)).build()).build());
+    public ResponseEntity<ResponsePayload<ErrorsPayload>> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(ResponsePayload.<ErrorsPayload>builder()
+                .status(STATUS_ERROR).result(ErrorsPayload.builder().errors(List.of(getError(METHOD_NOT_ALLOWED_ERROR))).build()).build());
     }
 
 }

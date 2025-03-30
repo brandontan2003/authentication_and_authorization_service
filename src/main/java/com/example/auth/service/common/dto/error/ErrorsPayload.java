@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ErrorsPayload {
 
-    private List<Error> errors;
+    private List<ErrorPayload> errors;
 
 }

@@ -1,9 +1,11 @@
 {
   "status": "ERROR",
   "result": {
-    "error": {
-      "errorCode": "FORBIDDEN_ERROR",
-      "errorMessage": "You do not have permission to access this resource."
-    }
+    "errors": [
+      {
+        "errorCode": "FORBIDDEN_ERROR",
+        "errorMessage": "You do not have permission to access this resource."
+      }
+    ]
   }
 }

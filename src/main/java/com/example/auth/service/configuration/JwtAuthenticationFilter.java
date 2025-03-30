@@ -1,8 +1,7 @@
 package com.example.auth.service.configuration;
 
 import com.example.auth.service.common.dto.ResponsePayload;
-import com.example.auth.service.common.dto.error.Error;
-import com.example.auth.service.common.dto.error.ErrorPayload;
+import com.example.auth.service.common.dto.error.ErrorsPayload;
 import com.example.auth.service.common.exception.CommonErrorMessage;
 import com.example.auth.service.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,6 +27,7 @@ import java.util.List;
 
 import static com.example.auth.service.common.constant.ApiConstant.*;
 import static com.example.auth.service.common.exception.CommonErrorMessage.*;
+import static com.example.auth.service.common.exception.CommonExceptionHandler.getError;
 import static com.example.auth.service.constant.UriConstant.API_AUTHENTICATION;
 import static com.example.auth.service.constant.UriConstant.OPEN;
 
@@ -94,11 +94,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.setContentType(APPLICATION_JSON);
         response.setStatus(error.getHttpStatus().value());
 
-        ErrorPayload errorPayload = ErrorPayload.builder()
-                .error(Error.builder().errorCode(error.getErrorCode()).errorMessage(error.getErrorMessage()).build())
+        ErrorsPayload errorPayload = ErrorsPayload.builder()
+                .errors(List.of(getError(error)))
                 .build();
 
-        ResponsePayload<ErrorPayload> responsePayload = ResponsePayload.<ErrorPayload>builder()
+        ResponsePayload<ErrorsPayload> responsePayload = ResponsePayload.<ErrorsPayload>builder()
                 .status(STATUS_ERROR)
                 .result(errorPayload)
                 .build();
